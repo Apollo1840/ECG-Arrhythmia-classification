@@ -8,17 +8,14 @@ convolutional neural network](https://arxiv.org/pdf/1804.06812.pdf) in which we 
 ## METHOD
 ![alt text](https://cdn-images-1.medium.com/max/1000/1*3SGHOVg_ycSOH-NN6OI8Tg.png)
 
-## MODEL
-Here is the link to the model: [Link](https://drive.google.com/open?id=1aFKVKz41A9fu8dX2KfwlEGV8vz9ljiuZ)
 ## Deploying the model
-1. Clone my repository.
-2. Clone this [repository](https://github.com/mtobeiyf/keras-flask-deploy-webapp). 
-3. Download the weights.
-4. Replace app.py in the other repository you have downloaded with the [app.py](https://github.com/ankur219/ECG-Arrhythmia-classification/blob/master/app.py) from my repository.
-5. Replace index.html as well that is present in the other repository with the [index.html](https://github.com/ankur219/ECG-Arrhythmia-classification/blob/master/index.html) that is provided in my repo.
-If you face any other problem related to deploying you can check this [repository](https://github.com/mtobeiyf/keras-flask-deploy-webapp).
+1. Clone this repository.
+2. Clone server [repository](https://github.com/mtobeiyf/keras-flask-deploy-webapp).
+3. Replace `app.py` and `index.html` in the server repo with files of same name from this repository.
+4. Download the model weights. Put it in server repo and make sure it is loadable through the `app.py`. 
+(Here is the link to the model: [Link](https://drive.google.com/open?id=1aFKVKz41A9fu8dX2KfwlEGV8vz9ljiuZ))
 
-The model works only if your data is similar to [sample.csv](https://github.com/ankur219/ECG-Arrhythmia-classification/blob/master/sample.csv)
+P.S The model works only if your data is similar to [sample.csv](https://github.com/ankur219/ECG-Arrhythmia-classification/blob/master/sample.csv)
 
 ## Here is a screenshot of the app from my system
 ![alt text](https://cdn-images-1.medium.com/max/1400/1*DbcZlDPIfRYLZknTrjcJLw.png)
