@@ -1,57 +1,65 @@
-model = Sequential()
+import keras
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, Conv2D, BatchNormalization, MaxPool2D, Flatten
 
-model.add(Conv2D(64, (3,3),strides = (1,1), input_shape = IMAGE_SIZE + [3],kernel_initializer='glorot_uniform'))
 
-model.add(keras.layers.ELU())
+def EcgNet(img_size):
+    model = Sequential()
 
-model.add(BatchNormalization())
+    model.add(Conv2D(64, (3,3), strides=(1, 1), input_shape=img_size+[3], kernel_initializer='glorot_uniform'))
 
-model.add(Conv2D(64, (3,3),strides = (1,1),kernel_initializer='glorot_uniform'))
+    model.add(keras.layers.ELU())
 
-model.add(keras.layers.ELU())
+    model.add(BatchNormalization())
 
-model.add(BatchNormalization())
+    model.add(Conv2D(64, (3,3),strides = (1,1),kernel_initializer='glorot_uniform'))
 
-model.add(MaxPool2D(pool_size=(2, 2), strides= (2,2)))
+    model.add(keras.layers.ELU())
 
-model.add(Conv2D(128, (3,3),strides = (1,1),kernel_initializer='glorot_uniform'))
+    model.add(BatchNormalization())
 
-model.add(keras.layers.ELU())
+    model.add(MaxPool2D(pool_size=(2, 2), strides= (2,2)))
 
-model.add(BatchNormalization())
+    model.add(Conv2D(128, (3,3),strides = (1,1),kernel_initializer='glorot_uniform'))
 
-model.add(Conv2D(128, (3,3),strides = (1,1),kernel_initializer='glorot_uniform'))
+    model.add(keras.layers.ELU())
 
-model.add(keras.layers.ELU())
+    model.add(BatchNormalization())
 
-model.add(BatchNormalization())
+    model.add(Conv2D(128, (3,3),strides = (1,1),kernel_initializer='glorot_uniform'))
 
-model.add(MaxPool2D(pool_size=(2, 2), strides= (2,2)))
+    model.add(keras.layers.ELU())
 
-model.add(Conv2D(256, (3,3),strides = (1,1),kernel_initializer='glorot_uniform'))
+    model.add(BatchNormalization())
 
-model.add(keras.layers.ELU())
+    model.add(MaxPool2D(pool_size=(2, 2), strides= (2,2)))
 
-model.add(BatchNormalization())
+    model.add(Conv2D(256, (3,3),strides = (1,1),kernel_initializer='glorot_uniform'))
 
-model.add(Conv2D(256, (3,3),strides = (1,1),kernel_initializer='glorot_uniform'))
+    model.add(keras.layers.ELU())
 
-model.add(keras.layers.ELU())
+    model.add(BatchNormalization())
 
-model.add(BatchNormalization())
+    model.add(Conv2D(256, (3,3),strides = (1,1),kernel_initializer='glorot_uniform'))
 
-model.add(MaxPool2D(pool_size=(2, 2), strides= (2,2)))
+    model.add(keras.layers.ELU())
 
-model.add(Flatten())
+    model.add(BatchNormalization())
 
-model.add(Dense(2048))
+    model.add(MaxPool2D(pool_size=(2, 2), strides= (2,2)))
 
-model.add(keras.layers.ELU())
+    model.add(Flatten())
 
-model.add(BatchNormalization())
+    model.add(Dense(2048))
 
-model.add(Dropout(0.5))
+    model.add(keras.layers.ELU())
 
-model.add(Dense(7, activation='softmax'))
+    model.add(BatchNormalization())
 
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    model.add(Dropout(0.5))
+
+    model.add(Dense(7, activation='softmax'))
+
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+    return model

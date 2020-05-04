@@ -1,3 +1,6 @@
+import cv2
+
+
 def cropping(image, filename):
     
     #Left Top Crop
