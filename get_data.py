@@ -1,6 +1,9 @@
 from glob import glob
 import numpy as np
 import wfdb
+import biosppy
+import matplotlib.pyplot as plt
+import cv2
 
 
 def get_records():
@@ -85,4 +88,64 @@ def get_beats(records, beat_type="N"):
                 beat_end_index = beats[j] + abs(beats[j+1] - beats[j])//2
                 beats.append(signals[beat_start_index: beat_end_index, 0])
     return beats
+
+
+def split_by_peaks(signal):
+    """
+
+    :param signal: List[float], the list of amplitude
+    :return: List[List[float]]. list of beats
+    """
+
+    signal = np.array(signal)
+    beats = []
+    count = 1
+    peaks = biosppy.signals.ecg.christov_segmenter(signal=signal, sampling_rate=200)[0]
+    for i in (peaks[1:-1]):
+        beat_start_index = peaks[count] + abs(peaks[count - 1] - i) // 2
+        beat_end_index = peaks[count] + abs(peaks[count + 1] - i) // 2
+        beats.append(signal[beat_start_index:beat_end_index])
+        count += 1
+    return beats
+
+
+def signals2imgs(signals, directory='.'):
+    """
+
+    :param signals: List[List[float]]: list of signals
+    :param directory:
+    :return:
+    """
+
+    for count, i in enumerate(signals):
+        filename = directory + '/' + str(count) + '.png'
+        sig2img(i, filename)
+
+
+def sig2img(sig, img_path, resize=True):
+    """
+    plot the signal and save the image.
+
+    :param sig: List[float]
+    :param img_path: str. path/to/save/the/img
+    :param resize: Bool, resize or not.
+    :return: None
+    """
+
+    fig = plt.figure(frameon=False)
+
+    plt.plot(sig)
+    plt.xticks([]), plt.yticks([])
+
+    for spine in plt.gca().spines.values():
+        spine.set_visible(False)
+
+    fig.savefig(img_path)
+
+    if resize:
+        im_gray = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
+        im_gray = cv2.resize(im_gray, (128, 128), interpolation=cv2.INTER_LANCZOS4)
+        cv2.imwrite(img_path, im_gray)
+
+
 
